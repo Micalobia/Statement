@@ -6,7 +6,8 @@
 	"plugin": "virtuoel.statement.mixin.StatementMixinConfigPlugin",
 	"mixins":
 	[
-		"IdListMixin",
+		"compat118plus.IdListMixin",
+		"compat117minus.IdListMixin",
 		"StateManagerBuilderMixin",
 		"StateManagerMixin",
 		"compat115minus.AbstractStateMixin",
