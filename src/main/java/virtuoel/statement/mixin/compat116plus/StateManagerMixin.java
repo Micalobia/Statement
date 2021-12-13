@@ -41,7 +41,7 @@ public class StateManagerMixin<O, S extends State<O, S>> implements RefreshableS
 	@Shadow @Final @Mutable ImmutableList<S> states;
 	
 	@Shadow
-	private static <S extends State<?, S>, T extends Comparable<T>> MapCodec<S> method_30040(MapCodec<S> mapCodec, Supplier<S> supplier, String string, Property<T> property)
+	private static <S extends State<?, S>, T extends Comparable<T>> MapCodec<S> addFieldToMapCodec(MapCodec<S> mapCodec, Supplier<S> supplier, String string, Property<T> property)
 	{
 		return null;
 	}
@@ -83,7 +83,7 @@ public class StateManagerMixin<O, S extends State<O, S>> implements RefreshableS
 		
 		for (final Entry<String, Property<?>> entry : this.properties.entrySet())
 		{
-			mapCodec = method_30040(mapCodec, decoder, entry.getKey(), entry.getValue());
+			mapCodec = addFieldToMapCodec(mapCodec, decoder, entry.getKey(), entry.getValue());
 		}
 		
 		this.mapCodec = (MapCodec<S>) mapCodec;
@@ -96,7 +96,7 @@ public class StateManagerMixin<O, S extends State<O, S>> implements RefreshableS
 		}
 	}
 	
-	@Redirect(method = "method_30040", remap = false, at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/Codec;fieldOf(Ljava/lang/String;)Lcom/mojang/serialization/MapCodec;"))
+	@Redirect(method = "addFieldToMapCodec", remap = false, at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/Codec;fieldOf(Ljava/lang/String;)Lcom/mojang/serialization/MapCodec;", args = "log=true"))
 	private static <S extends State<?, S>, T extends Comparable<T>> MapCodec<Property.Value<T>> fieldOfProxy(Codec<Property.Value<T>> c, String string, MapCodec<S> mapCodec, Supplier<S> supplier, String noop, Property<T> arg)
 	{
 		return c.optionalFieldOf(string, arg.createValue(arg.getValues().iterator().next()));

@@ -1,4 +1,4 @@
-package virtuoel.statement.mixin.compat116plus;
+package virtuoel.statement.mixin.compat116plus.compat117minus;
 
 import java.util.HashMap;
 import java.util.Map;
